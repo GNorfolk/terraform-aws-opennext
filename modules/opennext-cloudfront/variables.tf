@@ -196,3 +196,10 @@ variable "remove_headers_config" {
   })
 }
 
+variable "existing_cache_policy" {
+  description = "Details for data calling existing CloudFront cache policy"
+  type = object({
+    name = optional(string)
+    id   = optional(string)
+  })
+}
