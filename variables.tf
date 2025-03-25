@@ -389,6 +389,10 @@ variable "cloudfront" {
         items                 = optional(list(string))
       })
     }))
+    existing_cache_policy = optional(object({
+      name = optional(string)
+      id   = optional(string)
+    }))
     custom_waf = optional(object({
       arn = string
     }))
