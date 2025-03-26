@@ -389,7 +389,11 @@ variable "cloudfront" {
         items                 = optional(list(string))
       })
     }))
-    existing_cache_policy = optional(object({
+    custom_cache_policy = optional(object({
+      name = optional(string)
+      id   = optional(string)
+    }))
+    custom_response_headers_policy = optional(object({
       name = optional(string)
       id   = optional(string)
     }))
