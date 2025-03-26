@@ -196,7 +196,7 @@ variable "remove_headers_config" {
   })
 }
 
-variable "existing_cache_policy" {
+variable "custom_cache_policy" {
   description = "Details for data calling existing CloudFront cache policy"
   type = object({
     name = optional(string)
@@ -204,7 +204,7 @@ variable "existing_cache_policy" {
   })
 }
 
-variable "existing_response_headers_policy" {
+variable "custom_response_headers_policy" {
   description = "Details for data calling existing CloudFront response headers policy"
   type = object({
     name = optional(string)

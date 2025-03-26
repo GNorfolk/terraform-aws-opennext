@@ -54,8 +54,8 @@ locals {
     }
     origin_request_policy = try(var.cloudfront.origin_request_policy, null)
     
-    existing_cache_policy            = try(var.cloudfront.existing_cache_policy, null)
-    existing_response_headers_policy = try(var.cloudfront.existing_response_headers_policy, null)
+    custom_cache_policy            = try(var.cloudfront.custom_cache_policy, null)
+    custom_response_headers_policy = try(var.cloudfront.custom_response_headers_policy, null)
 
     custom_waf                = var.cloudfront.custom_waf
     waf_logging_configuration = var.cloudfront.waf_logging_configuration

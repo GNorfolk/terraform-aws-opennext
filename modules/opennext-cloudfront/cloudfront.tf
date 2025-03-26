@@ -3,8 +3,8 @@ locals {
   assets_origin_id             = "${var.prefix}-assets-origin"
   image_optimization_origin_id = "${var.prefix}-image-optimization-origin"
 
-  cloudfront_cache_policy_id            = var.existing_cache_policy == null ? aws_cloudfront_cache_policy.cache_policy[0].id : data.aws_cloudfront_cache_policy.cache_policy[0].id
-  cloudfront_response_headers_policy_id = var.existing_response_headers_policy == null ? aws_cloudfront_response_headers_policy.response_headers_policy[0].id : data.aws_cloudfront_response_headers_policy.response_headers_policy[0].id
+  cloudfront_cache_policy_id            = var.custom_cache_policy == null ? aws_cloudfront_cache_policy.cache_policy[0].id : data.aws_cloudfront_cache_policy.cache_policy[0].id
+  cloudfront_response_headers_policy_id = var.custom_response_headers_policy == null ? aws_cloudfront_response_headers_policy.response_headers_policy[0].id : data.aws_cloudfront_response_headers_policy.response_headers_policy[0].id
 }
 
 resource "aws_cloudfront_function" "host_header_function" {
@@ -57,13 +57,13 @@ resource "aws_cloudfront_origin_request_policy" "origin_request_policy" {
 }
 
 data "aws_cloudfront_cache_policy" "cache_policy" {
-  count = var.existing_cache_policy == null ? 0 : 1
-  name  = var.existing_cache_policy.name
-  id    = var.existing_cache_policy.id
+  count = var.custom_cache_policy == null ? 0 : 1
+  name  = var.custom_cache_policy.name
+  id    = var.custom_cache_policy.id
 }
 
 resource "aws_cloudfront_cache_policy" "cache_policy" {
-  count = var.existing_cache_policy == null ? 1 : 0
+  count = var.custom_cache_policy == null ? 1 : 0
   name  = "${var.prefix}-cache-policy"
 
   default_ttl = var.cache_policy.default_ttl
@@ -112,13 +112,13 @@ resource "aws_cloudfront_cache_policy" "cache_policy" {
 }
 
 data "aws_cloudfront_response_headers_policy" "response_headers_policy" {
-  count = var.existing_response_headers_policy == null ? 0 : 1
-  name  = var.existing_response_headers_policy.name
-  id    = var.existing_response_headers_policy.id
+  count = var.custom_response_headers_policy == null ? 0 : 1
+  name  = var.custom_response_headers_policy.name
+  id    = var.custom_response_headers_policy.id
 }
 
 resource "aws_cloudfront_response_headers_policy" "response_headers_policy" {
-  count   = var.existing_response_headers_policy == null ? 1 : 0
+  count   = var.custom_response_headers_policy == null ? 1 : 0
   name    = "${var.prefix}-response-headers-policy"
   comment = "${var.prefix} Response Headers Policy"
 

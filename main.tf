@@ -234,8 +234,8 @@ module "cloudfront" {
   cache_policy          = local.cloudfront.cache_policy
   remove_headers_config = local.cloudfront.remove_headers_config
 
-  existing_cache_policy            = local.cloudfront.existing_cache_policy
-  existing_response_headers_policy = local.cloudfront.existing_response_headers_policy
+  custom_cache_policy            = local.cloudfront.custom_cache_policy
+  custom_response_headers_policy = local.cloudfront.custom_response_headers_policy
 
   custom_waf                = local.cloudfront.custom_waf
   waf_logging_configuration = local.cloudfront.waf_logging_configuration
