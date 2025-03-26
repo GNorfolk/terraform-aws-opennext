@@ -203,3 +203,11 @@ variable "existing_cache_policy" {
     id   = optional(string)
   })
 }
+
+variable "existing_response_headers_policy" {
+  description = "Details for data calling existing CloudFront response headers policy"
+  type = object({
+    name = optional(string)
+    id   = optional(string)
+  })
+}

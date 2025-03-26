@@ -393,6 +393,10 @@ variable "cloudfront" {
       name = optional(string)
       id   = optional(string)
     }))
+    existing_response_headers_policy = optional(object({
+      name = optional(string)
+      id   = optional(string)
+    }))
     custom_waf = optional(object({
       arn = string
     }))

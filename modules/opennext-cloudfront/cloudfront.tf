@@ -2,7 +2,9 @@ locals {
   server_origin_id             = "${var.prefix}-server-origin"
   assets_origin_id             = "${var.prefix}-assets-origin"
   image_optimization_origin_id = "${var.prefix}-image-optimization-origin"
-  cloudfront_cache_policy_id   = var.existing_cache_policy == null ? aws_cloudfront_cache_policy.cache_policy[0].id : data.aws_cloudfront_cache_policy.cache_policy[0].id
+
+  cloudfront_cache_policy_id            = var.existing_cache_policy == null ? aws_cloudfront_cache_policy.cache_policy[0].id : data.aws_cloudfront_cache_policy.cache_policy[0].id
+  cloudfront_response_headers_policy_id = var.existing_response_headers_policy == null ? aws_cloudfront_response_headers_policy.response_headers_policy[0].id : data.aws_cloudfront_response_headers_policy.response_headers_policy[0].id
 }
 
 resource "aws_cloudfront_function" "host_header_function" {
@@ -109,7 +111,14 @@ resource "aws_cloudfront_cache_policy" "cache_policy" {
   }
 }
 
+data "aws_cloudfront_response_headers_policy" "response_headers_policy" {
+  count = var.existing_response_headers_policy == null ? 0 : 1
+  name  = var.existing_response_headers_policy.name
+  id    = var.existing_response_headers_policy.id
+}
+
 resource "aws_cloudfront_response_headers_policy" "response_headers_policy" {
+  count   = var.existing_response_headers_policy == null ? 1 : 0
   name    = "${var.prefix}-response-headers-policy"
   comment = "${var.prefix} Response Headers Policy"
 
@@ -244,7 +253,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.assets_origin_id
 
-    response_headers_policy_id = aws_cloudfront_response_headers_policy.response_headers_policy.id
+    response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
     origin_request_policy_id = try(
       data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
@@ -261,7 +270,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.image_optimization_origin_id
 
-    response_headers_policy_id = aws_cloudfront_response_headers_policy.response_headers_policy.id
+    response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
     origin_request_policy_id = try(
       data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
@@ -278,7 +287,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
     target_origin_id = local.server_origin_id
 
-    response_headers_policy_id = aws_cloudfront_response_headers_policy.response_headers_policy.id
+    response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
     origin_request_policy_id = try(
       data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
@@ -300,7 +309,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
     target_origin_id = local.server_origin_id
 
-    response_headers_policy_id = aws_cloudfront_response_headers_policy.response_headers_policy.id
+    response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
     origin_request_policy_id = try(
       data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
@@ -322,7 +331,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.assets_origin_id
 
-    response_headers_policy_id = aws_cloudfront_response_headers_policy.response_headers_policy.id
+    response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
     origin_request_policy_id = try(
       data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
@@ -342,7 +351,7 @@ resource "aws_cloudfront_distribution" "distribution" {
       cached_methods   = ["GET", "HEAD", "OPTIONS"]
       target_origin_id = local.assets_origin_id
 
-      response_headers_policy_id = aws_cloudfront_response_headers_policy.response_headers_policy.id
+      response_headers_policy_id = local.cloudfront_response_headers_policy_id
       cache_policy_id            = local.cloudfront_cache_policy_id
       origin_request_policy_id = try(
         data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
@@ -359,7 +368,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
     target_origin_id = local.server_origin_id
 
-    response_headers_policy_id = aws_cloudfront_response_headers_policy.response_headers_policy.id
+    response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
     origin_request_policy_id = try(
       data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
