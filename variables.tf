@@ -426,3 +426,11 @@ variable "cloudfront" {
     }))
   })
 }
+
+variable "cloudfront_log_options" {
+  description = "Variables passed to the cloudfront-logs module for the Next.js server"
+  type = object({
+    cloudwatch_log_group_kms_key_arn = optional(string)
+  })
+  default = {}
+}

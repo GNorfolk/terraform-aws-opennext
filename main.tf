@@ -201,6 +201,8 @@ module "cloudfront_logs" {
   log_group_name  = "${var.prefix}-cloudfront-logs"
   log_bucket_name = "${var.prefix}-cloudfront-logs"
   retention       = 365
+
+  cloudwatch_log_group_kms_key_arn = local.cloudfront_log_options.cloudwatch_log_group_kms_key_arn
 }
 
 /**
