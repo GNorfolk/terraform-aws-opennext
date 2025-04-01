@@ -150,6 +150,8 @@ module "revalidation_queue" {
 
   aws_account_id            = data.aws_caller_identity.current.account_id
   revalidation_function_arn = module.revalidation_function.lambda_function.arn
+
+  kms_key_arn = local.revalidation_queue_options.kms_key_arn
 }
 
 /**

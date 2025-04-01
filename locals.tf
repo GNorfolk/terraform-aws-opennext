@@ -225,6 +225,13 @@ locals {
   }
 
   /**
+   * ISR Revalidation Queue Options
+   **/
+  revalidation_queue_options = {
+    kms_key_arn = try(var.revalidation_queue_options.kms_key_arn, null)
+  }
+
+  /**
    * Warmer Function Options
    **/
   warmer_options = {
