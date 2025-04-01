@@ -259,6 +259,14 @@ variable "revalidation_options" {
   default = {}
 }
 
+variable "revalidation_queue_options" {
+  description = "Variables passed to the opennext-revalidation-queue module for the ISR Revalidation Queue infrastructure"
+  type = object({
+    kms_key_arn = optional(string)
+  })
+  default = {}
+}
+
 variable "warmer_options" {
   description = "Variables passed to the opennext-lambda module for the Next.js Warmer function"
   type = object({
@@ -425,4 +433,12 @@ variable "cloudfront" {
       })))
     }))
   })
+}
+
+variable "cloudfront_log_options" {
+  description = "Variables passed to the cloudfront-logs module for the CloudFront infrastructure"
+  type = object({
+    cloudwatch_log_group_kms_key_arn = optional(string)
+  })
+  default = {}
 }

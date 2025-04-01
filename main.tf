@@ -150,6 +150,8 @@ module "revalidation_queue" {
 
   aws_account_id            = data.aws_caller_identity.current.account_id
   revalidation_function_arn = module.revalidation_function.lambda_function.arn
+
+  kms_key_arn = local.revalidation_queue_options.kms_key_arn
 }
 
 /**
@@ -201,6 +203,8 @@ module "cloudfront_logs" {
   log_group_name  = "${var.prefix}-cloudfront-logs"
   log_bucket_name = "${var.prefix}-cloudfront-logs"
   retention       = 365
+
+  cloudwatch_log_group_kms_key_arn = local.cloudfront_log_options.cloudwatch_log_group_kms_key_arn
 }
 
 /**

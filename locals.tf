@@ -225,6 +225,13 @@ locals {
   }
 
   /**
+   * ISR Revalidation Queue Options
+   **/
+  revalidation_queue_options = {
+    kms_key_arn = try(var.revalidation_queue_options.kms_key_arn, null)
+  }
+
+  /**
    * Warmer Function Options
    **/
   warmer_options = {
@@ -271,5 +278,12 @@ locals {
         resources = [module.server_function.lambda_function.arn]
       }
     ], coalesce(try(var.warmer_options.iam_policy, null), []))
+  }
+
+  /**
+   * CloudFront Log Options
+   **/
+  cloudfront_log_options = {
+    cloudwatch_log_group_kms_key_arn = try(var.cloudfront_log_options.cloudwatch_log_group_kms_key_arn, null)
   }
 }
