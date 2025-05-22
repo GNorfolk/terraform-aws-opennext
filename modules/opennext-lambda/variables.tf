@@ -151,6 +151,12 @@ variable "subnet_ids" {
   default     = []
 }
 
+variable "subnet_map_public_ip" {
+  type        = bool
+  description = "The VPC to attach the lambda function to"
+  default     = false
+}
+
 variable "security_group_ingress_rules" {
   type = list(object({
     description      = string
