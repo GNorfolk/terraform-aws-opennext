@@ -85,7 +85,7 @@ resource "aws_security_group" "function_sg" {
   count = var.vpc_id == null ? 0 : 1
 
   name   = "${var.prefix}-sg"
-  vpc_id = data.aws_vopc.this[0].id
+  vpc_id = data.aws_vpc.this[0].id
 
   egress {
     description = "Allow HTTPS egress from Lambda function"
