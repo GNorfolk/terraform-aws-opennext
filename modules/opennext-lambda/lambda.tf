@@ -49,7 +49,7 @@ resource "aws_lambda_function" "function" {
 
     content {
       security_group_ids = [aws_security_group.function_sg[0].id]
-      subnet_ids         = var.subnet_ids
+      subnet_ids         = data.aws_subnets.this[0].ids
     }
   }
 
@@ -85,7 +85,7 @@ resource "aws_security_group" "function_sg" {
   count = var.vpc_id == null ? 0 : 1
 
   name   = "${var.prefix}-sg"
-  vpc_id = var.vpc_id
+  vpc_id = data.aws_vopc.this[0].id
 
   egress {
     description = "Allow HTTPS egress from Lambda function"

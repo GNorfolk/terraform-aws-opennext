@@ -61,6 +61,7 @@ module "server_function" {
 
   vpc_id                       = local.server_options.networking.vpc_id
   subnet_ids                   = local.server_options.networking.subnet_ids
+  subnet_map_public_ip         = local.server_options.networking.subnet_map_public_ip
   security_group_ingress_rules = local.server_options.networking.security_group_ingress_rules
   security_group_egress_rules  = local.server_options.networking.security_group_egress_rules
 
@@ -97,6 +98,7 @@ module "image_optimization_function" {
 
   vpc_id                       = local.image_optimization_options.networking.vpc_id
   subnet_ids                   = local.image_optimization_options.networking.subnet_ids
+  subnet_map_public_ip         = local.image_optimization_options.networking.subnet_map_public_ip
   security_group_ingress_rules = local.image_optimization_options.networking.security_group_ingress_rules
   security_group_egress_rules  = local.image_optimization_options.networking.security_group_egress_rules
 
@@ -132,6 +134,7 @@ module "revalidation_function" {
 
   vpc_id                       = local.revalidation_options.networking.vpc_id
   subnet_ids                   = local.revalidation_options.networking.subnet_ids
+  subnet_map_public_ip         = local.revalidation_options.networking.subnet_map_public_ip
   security_group_ingress_rules = local.revalidation_options.networking.security_group_ingress_rules
   security_group_egress_rules  = local.revalidation_options.networking.security_group_egress_rules
 
@@ -185,6 +188,7 @@ module "warmer_function" {
 
   vpc_id                       = local.warmer_options.networking.vpc_id
   subnet_ids                   = local.warmer_options.networking.subnet_ids
+  subnet_map_public_ip         = local.warmer_options.networking.subnet_map_public_ip
   security_group_ingress_rules = local.warmer_options.networking.security_group_ingress_rules
   security_group_egress_rules  = local.warmer_options.networking.security_group_egress_rules
 
