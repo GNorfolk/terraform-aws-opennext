@@ -91,7 +91,7 @@ locals {
 
     networking = {
       vpc_id                       = try(var.server_options.networking.vpc_id, null)
-      subnet_map_public_ip         = try(var.server_options.networking.subnet_map_public_ip, null)
+      subnet_map_public_ip         = coalesce(try(var.server_options.networking.subnet_map_public_ip, null), false)
       subnet_ids                   = coalesce(try(var.server_options.networking.subnet_ids, null), [])
       security_group_ingress_rules = coalesce(try(var.server_options.networking.sg_ingress_rules, null), [])
       security_group_egress_rules  = coalesce(try(var.server_options.networking.sg_egress_rules, null), [])
@@ -154,7 +154,7 @@ locals {
 
     networking = {
       vpc_id                       = try(var.image_optimization_options.networking.vpc_id, null)
-      subnet_map_public_ip         = try(var.image_optimization_options.networking.subnet_map_public_ip, null)
+      subnet_map_public_ip         = coalesce(try(var.image_optimization_options.networking.subnet_map_public_ip, null), false)
       subnet_ids                   = coalesce(try(var.image_optimization_options.networking.subnet_ids, null), [])
       security_group_ingress_rules = coalesce(try(var.image_optimization_options.networking.sg_ingress_rules, null), [])
       security_group_egress_rules  = coalesce(try(var.image_optimization_options.networking.sg_egress_rules, null), [])
@@ -205,7 +205,7 @@ locals {
 
     networking = {
       vpc_id                       = try(var.revalidation_options.networking.vpc_id, null)
-      subnet_map_public_ip         = try(var.revalidation_options.networking.subnet_map_public_ip, null)
+      subnet_map_public_ip         = coalesce(try(var.revalidation_options.networking.subnet_map_public_ip, null), false)
       subnet_ids                   = coalesce(try(var.revalidation_options.networking.subnet_ids, null), [])
       security_group_ingress_rules = coalesce(try(var.revalidation_options.networking.sg_ingress_rules, null), [])
       security_group_egress_rules  = coalesce(try(var.revalidation_options.networking.sg_egress_rules, null), [])
@@ -264,7 +264,7 @@ locals {
 
     networking = {
       vpc_id                       = try(var.warmer_options.networking.vpc_id, null)
-      subnet_map_public_ip         = try(var.warmer_options.networking.subnet_map_public_ip, null)
+      subnet_map_public_ip         = coalesce(try(var.warmer_options.networking.subnet_map_public_ip, null), false)
       subnet_ids                   = coalesce(try(var.warmer_options.networking.subnet_ids, null), [])
       security_group_ingress_rules = coalesce(try(var.warmer_options.networking.sg_ingress_rules, null), [])
       security_group_egress_rules  = coalesce(try(var.warmer_options.networking.sg_egress_rules, null), [])
