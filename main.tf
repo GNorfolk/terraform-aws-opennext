@@ -5,6 +5,9 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = ">= 4.0"
+      configuration_aliases = [
+        aws.global,
+      ]
     }
   }
 }
@@ -216,6 +219,11 @@ module "cloudfront_logs" {
  **/
 module "cloudfront" {
   source       = "./modules/opennext-cloudfront"
+  providers = {
+    aws        = aws
+    aws.global = aws.global
+  }
+
   prefix       = "${var.prefix}-cloudfront"
   region       = local.aws_region
   default_tags = var.default_tags
