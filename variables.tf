@@ -354,11 +354,11 @@ variable "cloudfront" {
       locations        = list(string)
     }))
     cors = optional(object({
-      allow_credentials = bool,
-      allow_headers     = list(string)
-      allow_methods     = list(string)
-      allow_origins     = list(string)
-      origin_override   = bool
+      allow_credentials = optional(bool)
+      allow_headers     = optional(list(string))
+      allow_methods     = optional(list(string))
+      allow_origins     = optional(list(string))
+      origin_override   = optional(bool)
     }))
     remove_headers_config = optional(object({
       items = list(string)

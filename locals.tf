@@ -17,13 +17,13 @@ locals {
       locations        = []
     })
     price_class = coalesce(try(var.cloudfront.price_class, null), "PriceClass_All")
-    cors = merge({
-      allow_credentials = false,
-      allow_headers     = ["*"],
-      allow_methods     = ["ALL"],
-      allow_origins     = ["*"],
-      origin_override   = true
-    }, var.cloudfront.cors)
+    cors = {
+      allow_credentials = coalesce(var.cloudfront.cors.allow_credentials, false)
+      allow_headers     = coalesce(var.cloudfront.cors.allow_headers, ["*"])
+      allow_methods     = coalesce(var.cloudfront.cors.allow_methods, ["ALL"])
+      allow_origins     = coalesce(var.cloudfront.cors.allow_origins, ["*"])
+      origin_override   = coalesce(var.cloudfront.cors.origin_override, true)
+    }
     hsts = merge({
       access_control_max_age_sec = 31536000
       include_subdomains         = true
