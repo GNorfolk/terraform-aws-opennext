@@ -369,6 +369,21 @@ variable "cloudfront" {
       override                   = bool
       preload                    = bool
     }))
+    content_security_policy = optional(object({
+      override = bool
+      policy   = string
+    }))
+    content_type_options = optional(object({
+      override = bool
+    }))
+    frame_options = optional(object({
+      override = bool
+      option   = string
+    }))
+    referrer_policy = optional(object({
+      override = bool
+      policy   = string
+    }))
     cache_policy = optional(object({
       default_ttl                   = optional(number)
       min_ttl                       = optional(number)
