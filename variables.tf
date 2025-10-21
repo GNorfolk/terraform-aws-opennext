@@ -354,11 +354,11 @@ variable "cloudfront" {
       locations        = list(string)
     }))
     cors = optional(object({
-      allow_credentials = bool,
-      allow_headers     = list(string)
-      allow_methods     = list(string)
-      allow_origins     = list(string)
-      origin_override   = bool
+      allow_credentials = optional(bool)
+      allow_headers     = optional(list(string))
+      allow_methods     = optional(list(string))
+      allow_origins     = optional(list(string))
+      origin_override   = optional(bool)
     }))
     remove_headers_config = optional(object({
       items = list(string)
@@ -368,6 +368,21 @@ variable "cloudfront" {
       include_subdomains         = bool
       override                   = bool
       preload                    = bool
+    }))
+    content_security_policy = optional(object({
+      override = bool
+      policy   = string
+    }))
+    content_type_options = optional(object({
+      override = bool
+    }))
+    frame_options = optional(object({
+      override = bool
+      option   = string
+    }))
+    referrer_policy = optional(object({
+      override = bool
+      policy   = string
     }))
     cache_policy = optional(object({
       default_ttl                   = optional(number)

@@ -140,6 +140,25 @@ resource "aws_cloudfront_response_headers_policy" "response_headers_policy" {
   }
 
   security_headers_config {
+    content_security_policy {
+      override                = var.content_security_policy.override
+      content_security_policy = var.content_security_policy.policy
+    }
+
+    content_type_options {
+      override = var.content_type_options.override
+    }
+
+    frame_options {
+      override     = var.frame_options.override
+      frame_option = var.frame_options.option
+    }
+
+    referrer_policy {
+      override        = var.referrer_policy.override
+      referrer_policy = var.referrer_policy.policy
+    }
+
     strict_transport_security {
       access_control_max_age_sec = var.hsts.access_control_max_age_sec
       include_subdomains         = var.hsts.include_subdomains

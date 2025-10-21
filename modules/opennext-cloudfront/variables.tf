@@ -104,6 +104,52 @@ variable "hsts" {
   }
 }
 
+variable "content_security_policy" {
+  description = "Content-Security-Policy security header configuration for the CloudFront distribution"
+  type = object({
+    override = bool
+    policy   = string
+  })
+  default = {
+    override = true
+    policy   = "default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:"
+  }
+}
+
+variable "content_type_options" {
+  description = "X-Content-Type-Options security header configuration for the CloudFront distribution"
+  type = object({
+    override = bool
+  })
+  default = {
+    override = true
+  }
+}
+
+variable "frame_options" {
+  description = "X-Frame-Options security header configuration for the CloudFront distribution"
+  type = object({
+    override = bool
+    option   = string
+  })
+  default = {
+    override = true
+    option   = "DENY"
+  }
+}
+
+variable "referrer_policy" {
+  description = "Referrer-Policy security header configuration for the CloudFront distribution"
+  type = object({
+    override = bool
+    policy   = string
+  })
+  default = {
+    override = true
+    policy   = "strict-origin-when-cross-origin"
+  }
+}
+
 variable "custom_waf" {
   description = "ARN value for an externally created AWS WAF"
   type = object({
