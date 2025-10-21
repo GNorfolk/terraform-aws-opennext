@@ -24,27 +24,27 @@ locals {
       allow_origins     = coalesce(try(var.cloudfront.cors.allow_origins, null), ["*"])
       origin_override   = coalesce(try(var.cloudfront.cors.origin_override, null), true)
     }
-    hsts = merge({
-      access_control_max_age_sec = 31536000
-      include_subdomains         = true
-      override                   = true
-      preload                    = true
-    }, var.cloudfront.hsts)
-    content_security_policy = merge({
-      override = true
-      policy   = "default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:"
-    }, var.cloudfront.content_security_policy)
-    content_type_options = merge({
-      override = true
-    }, var.cloudfront.content_type_options)
-    frame_options = merge({
-      override = true
-      option   = "DENY"
-    }, var.cloudfront.frame_options)
-    referrer_policy = merge({
-      override = true
-      policy   = "strict-origin-when-cross-origin"
-    }, var.cloudfront.referrer_policy)
+    hsts = {
+      access_control_max_age_sec = coalesce(try(var.cloudfront.hsts.access_control_max_age_sec, null), 31536000)
+      include_subdomains         = coalesce(try(var.cloudfront.hsts.include_subdomains, null), true)
+      override                   = coalesce(try(var.cloudfront.hsts.override, null), true)
+      preload                    = coalesce(try(var.cloudfront.hsts.preload, null), true)
+    }
+    content_security_policy = {
+      override = coalesce(try(var.cloudfront.content_security_policy.override, null), true)
+      policy   = coalesce(try(var.cloudfront.content_security_policy.policy, null), "default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:")
+    }
+    content_type_options = {
+      override = coalesce(try(var.cloudfront.content_type_options.override, null), true)
+    }
+    frame_options = {
+      override = coalesce(try(var.cloudfront.frame_options.override, null), true)
+      option   = coalesce(try(var.cloudfront.frame_options.option, null), "DENY")
+    }
+    referrer_policy = {
+      override = coalesce(try(var.cloudfront.referrer_policy.override, null), true)
+      policy   = coalesce(try(var.cloudfront.referrer_policy.policy, null), "strict-origin-when-cross-origin")
+    }
     remove_headers_config = merge({
       items : []
     }, var.cloudfront.remove_headers_config)

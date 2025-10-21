@@ -364,25 +364,25 @@ variable "cloudfront" {
       items = list(string)
     }))
     hsts = optional(object({
-      access_control_max_age_sec = number
-      include_subdomains         = bool
-      override                   = bool
-      preload                    = bool
+      access_control_max_age_sec = optional(number)
+      include_subdomains         = optional(bool)
+      override                   = optional(bool)
+      preload                    = optional(bool)
     }))
     content_security_policy = optional(object({
-      override = bool
-      policy   = string
+      override = optional(bool)
+      policy   = optional(string)
     }))
     content_type_options = optional(object({
-      override = bool
+      override = optional(bool)
     }))
     frame_options = optional(object({
-      override = bool
-      option   = string
+      override = optional(bool)
+      option   = optional(string)
     }))
     referrer_policy = optional(object({
-      override = bool
-      policy   = string
+      override = optional(bool)
+      policy   = optional(string)
     }))
     cache_policy = optional(object({
       default_ttl                   = optional(number)
