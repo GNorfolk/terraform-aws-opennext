@@ -31,17 +31,21 @@ locals {
       preload                    = coalesce(try(var.cloudfront.hsts.preload, null), true)
     }
     content_security_policy = {
+      enabled  = coalesce(try(var.cloudfront.content_security_policy.enabled, null), false)
       override = coalesce(try(var.cloudfront.content_security_policy.override, null), true)
-      policy   = coalesce(try(var.cloudfront.content_security_policy.policy, null), "default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:")
+      policy   = coalesce(try(var.cloudfront.content_security_policy.policy, null), "default-src 'self'")
     }
     content_type_options = {
+      enabled  = coalesce(try(var.cloudfront.content_type_options.enabled, null), true)
       override = coalesce(try(var.cloudfront.content_type_options.override, null), true)
     }
     frame_options = {
+      enabled  = coalesce(try(var.cloudfront.frame_options.enabled, null), true)
       override = coalesce(try(var.cloudfront.frame_options.override, null), true)
-      option   = coalesce(try(var.cloudfront.frame_options.option, null), "DENY")
+      option   = coalesce(try(var.cloudfront.frame_options.option, null), "SAMEORIGIN")
     }
     referrer_policy = {
+      enabled  = coalesce(try(var.cloudfront.referrer_policy.enabled, null), true)
       override = coalesce(try(var.cloudfront.referrer_policy.override, null), true)
       policy   = coalesce(try(var.cloudfront.referrer_policy.policy, null), "strict-origin-when-cross-origin")
     }

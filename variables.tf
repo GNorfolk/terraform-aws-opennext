@@ -370,17 +370,21 @@ variable "cloudfront" {
       preload                    = optional(bool)
     }))
     content_security_policy = optional(object({
+      enabled  = optional(bool)
       override = optional(bool)
       policy   = optional(string)
     }))
     content_type_options = optional(object({
+      enabled  = optional(bool)
       override = optional(bool)
     }))
     frame_options = optional(object({
+      enabled  = optional(bool)
       override = optional(bool)
       option   = optional(string)
     }))
     referrer_policy = optional(object({
+      enabled  = optional(bool)
       override = optional(bool)
       policy   = optional(string)
     }))
