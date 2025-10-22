@@ -107,10 +107,12 @@ variable "hsts" {
 variable "content_security_policy" {
   description = "Content-Security-Policy security header configuration for the CloudFront distribution"
   type = object({
+    enabled  = bool
     override = bool
     policy   = string
   })
   default = {
+    enabled  = false
     override = true
     policy   = "default-src 'self'"
   }
@@ -119,9 +121,11 @@ variable "content_security_policy" {
 variable "content_type_options" {
   description = "X-Content-Type-Options security header configuration for the CloudFront distribution"
   type = object({
+    enabled  = bool
     override = bool
   })
   default = {
+    enabled  = false
     override = true
   }
 }
@@ -129,22 +133,26 @@ variable "content_type_options" {
 variable "frame_options" {
   description = "X-Frame-Options security header configuration for the CloudFront distribution"
   type = object({
+    enabled  = bool
     override = bool
     option   = string
   })
   default = {
+    enabled  = false
     override = true
-    option   = "DENY"
+    option   = "SAMEORIGIN"
   }
 }
 
 variable "referrer_policy" {
   description = "Referrer-Policy security header configuration for the CloudFront distribution"
   type = object({
+    enabled  = bool
     override = bool
     policy   = string
   })
   default = {
+    enabled  = false
     override = true
     policy   = "strict-origin-when-cross-origin"
   }

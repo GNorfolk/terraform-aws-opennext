@@ -140,23 +140,35 @@ resource "aws_cloudfront_response_headers_policy" "response_headers_policy" {
   }
 
   security_headers_config {
-    content_security_policy {
-      override                = var.content_security_policy.override
-      content_security_policy = var.content_security_policy.policy
+    dynamic "content_security_policy" {
+      for_each = var.content_security_policy.enabled ? [1] : []
+      content {
+        override                = var.content_security_policy.override
+        content_security_policy = var.content_security_policy.policy
+      }
     }
 
-    content_type_options {
-      override = var.content_type_options.override
+    dynamic "content_type_options" {
+      for_each = var.content_type_options.enabled ? [1] : []
+      content {
+        override = var.content_type_options.override
+      }
     }
 
-    frame_options {
-      override     = var.frame_options.override
-      frame_option = var.frame_options.option
+    dynamic "frame_options" {
+      for_each = var.frame_options.enabled ? [1] : []
+      content {
+        override     = var.frame_options.override
+        frame_option = var.frame_options.option
+      }
     }
 
-    referrer_policy {
-      override        = var.referrer_policy.override
-      referrer_policy = var.referrer_policy.policy
+    dynamic "referrer_policy" {
+      for_each = var.referrer_policy.enabled ? [1] : []
+      content {
+        override        = var.referrer_policy.override
+        referrer_policy = var.referrer_policy.policy
+      }
     }
 
     strict_transport_security {
