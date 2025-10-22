@@ -32,7 +32,7 @@ locals {
     }
     content_security_policy = {
       override = coalesce(try(var.cloudfront.content_security_policy.override, null), true)
-      policy   = coalesce(try(var.cloudfront.content_security_policy.policy, null), "default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:")
+      policy   = coalesce(try(var.cloudfront.content_security_policy.policy, null), "default-src 'self'")
     }
     content_type_options = {
       override = coalesce(try(var.cloudfront.content_type_options.override, null), true)

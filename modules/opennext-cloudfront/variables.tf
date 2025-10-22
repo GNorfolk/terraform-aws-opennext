@@ -112,7 +112,7 @@ variable "content_security_policy" {
   })
   default = {
     override = true
-    policy   = "default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:"
+    policy   = "default-src 'self'"
   }
 }
 
