@@ -23,7 +23,7 @@ resource "aws_lambda_function" "cloudfront_logs_function" {
   handler = "index.handler"
 
   timeout                        = 5
-  reserved_concurrent_executions = 3
+  reserved_concurrent_executions = -1
 
   filename                = data.archive_file.cloudfront_logs_zip.output_path
   source_code_hash        = data.archive_file.cloudfront_logs_zip.output_base64sha256
