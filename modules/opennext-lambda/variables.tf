@@ -132,7 +132,7 @@ variable "dead_letter_config" {
 variable "reserved_concurrent_executions" {
   description = "Concurrency limit for the lambda function"
   type        = number
-  default     = 10
+  default     = -1
 }
 
 
