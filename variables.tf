@@ -14,6 +14,12 @@ variable "default_tags" {
   default     = {}
 }
 
+variable "default_runtime" {
+  type = string
+  description = "Default runtime for Lambda functions"
+  default = "nodejs18.x"
+}
+
 /**
  * AWS Provider Variables
  **/
