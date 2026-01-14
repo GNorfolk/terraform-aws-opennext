@@ -16,9 +16,16 @@ resource "aws_lambda_code_signing_config" "signing_config" {
   }
 }
 
+resource "aws_s3_object" "lambda_zip" {
+  bucket = var.artifacts_bucket
+  key    = "${var.prefix}.zip"
+  source = data.archive_file.lambda_zip.output_path
+  etag   = data.archive_file.lambda_zip.output_base64sha256
+}
+
 resource "aws_lambda_function" "function" {
-  filename         = data.archive_file.lambda_zip.output_path
-  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  s3_bucket = aws_s3_object.lambda_zip.bucket
+  s3_key    = aws_s3_object.lambda_zip.key
 
   function_name = var.function_name != null ? var.function_name : var.prefix
   description   = var.description
@@ -31,6 +38,7 @@ resource "aws_lambda_function" "function" {
   kms_key_arn                    = var.kms_key_arn
   code_signing_config_arn        = try(aws_lambda_code_signing_config.signing_config[0].arn, null)
   reserved_concurrent_executions = var.reserved_concurrent_executions
+  source_code_hash               = data.archive_file.lambda_zip.output_base64sha256
 
   memory_size = var.memory_size
   timeout     = var.timeout

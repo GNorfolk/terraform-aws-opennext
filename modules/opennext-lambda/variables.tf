@@ -210,3 +210,11 @@ variable "schedule_expression" {
   description = "The schedule expression of the eventbridge lambda trigger rule (if enabled)"
   default     = "rate(5 minutes)"
 }
+
+/**
+ * Artifacts Bucket
+ **/
+variable "artifacts_bucket" {
+  type        = string
+  description = "TBD"
+}

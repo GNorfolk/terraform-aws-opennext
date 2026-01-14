@@ -38,7 +38,7 @@ resource "aws_lambda_function" "cloudfront_logs_function" {
   environment {
     variables = {
       LOG_GROUP_NAME   = var.log_group_name
-      LOG_GROUP_REGION = data.aws_region.current.name
+      LOG_GROUP_REGION = data.aws_region.current.region
     }
   }
 
@@ -87,7 +87,7 @@ data "aws_iam_policy_document" "cloudfront_logs_policy" {
 
   statement {
     actions   = ["logs:DescribeLogStreams"]
-    resources = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
+    resources = ["arn:aws:logs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:*"]
   }
 
   statement {
