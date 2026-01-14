@@ -34,6 +34,16 @@ module "assets" {
   static_asset_cache_config = var.static_asset_cache_config
 }
 
+/**
+ * Artifacts S3 Bucket
+ **/
+module "artifacts" {
+  source       = "./modules/artifacts-bucket"
+  region       = local.aws_region
+  default_tags = var.default_tags
+
+  prefix       = "${var.prefix}-artifacts"
+}
 
 /**
  * Next.js Server Function
@@ -59,8 +69,9 @@ module "server_function" {
   log_group                      = local.server_options.log_group
 
 
-  source_dir = local.server_options.package.source_dir
-  output_dir = local.server_options.package.output_dir
+  source_dir       = local.server_options.package.source_dir
+  output_dir       = local.server_options.package.output_dir
+  artifacts_bucket = module.artifacts.artifacts_bucket.id
 
   vpc_id                       = local.server_options.networking.vpc_id
   subnet_ids                   = local.server_options.networking.subnet_ids
@@ -96,8 +107,9 @@ module "image_optimization_function" {
   code_signing_config            = local.image_optimization_options.function.code_signing_config
   log_group                      = local.image_optimization_options.log_group
 
-  source_dir = local.image_optimization_options.package.source_dir
-  output_dir = local.image_optimization_options.package.output_dir
+  source_dir       = local.image_optimization_options.package.source_dir
+  output_dir       = local.image_optimization_options.package.output_dir
+  artifacts_bucket = module.artifacts.artifacts_bucket.id
 
   vpc_id                       = local.image_optimization_options.networking.vpc_id
   subnet_ids                   = local.image_optimization_options.networking.subnet_ids
@@ -132,8 +144,9 @@ module "revalidation_function" {
   code_signing_config            = local.revalidation_options.function.code_signing_config
   log_group                      = local.revalidation_options.log_group
 
-  source_dir = local.revalidation_options.package.source_dir
-  output_dir = local.revalidation_options.package.output_dir
+  source_dir       = local.revalidation_options.package.source_dir
+  output_dir       = local.revalidation_options.package.output_dir
+  artifacts_bucket = module.artifacts.artifacts_bucket.id
 
   vpc_id                       = local.revalidation_options.networking.vpc_id
   subnet_ids                   = local.revalidation_options.networking.subnet_ids
@@ -186,8 +199,9 @@ module "warmer_function" {
   code_signing_config            = local.warmer_options.function.code_signing_config
   log_group                      = local.warmer_options.log_group
 
-  source_dir = local.warmer_options.package.source_dir
-  output_dir = local.warmer_options.package.output_dir
+  source_dir       = local.warmer_options.package.source_dir
+  output_dir       = local.warmer_options.package.output_dir
+  artifacts_bucket = module.artifacts.artifacts_bucket.id
 
   vpc_id                       = local.warmer_options.networking.vpc_id
   subnet_ids                   = local.warmer_options.networking.subnet_ids
