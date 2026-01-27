@@ -106,8 +106,10 @@ variable "kms_key_arn" {
 variable "log_group" {
   description = "Options passed to the CloudWatch log group for the Lambda function"
   type = object({
-    retention_in_days = number
-    kms_key_id        = string
+    retention_in_days      = number
+    kms_key_id             = string
+    filter_destination_arn = string
+    filter_pattern         = string
   })
 }
 

@@ -104,8 +104,10 @@ locals {
     }
 
     log_group = {
-      retention_in_days = coalesce(try(var.server_options.log_group.retention_in_days, null), 365)
-      kms_key_id        = try(var.server_options.log_group.kms_key_id, null)
+      retention_in_days      = coalesce(try(var.server_options.log_group.retention_in_days, null), 365)
+      kms_key_id             = try(var.server_options.log_group.kms_key_id, null)
+      filter_destination_arn = try(var.server_options.log_group.filter_destination_arn, null)
+      filter_pattern         = coalesce(try(var.server_options.log_group.filter_pattern, null), "")
     }
 
     networking = {
@@ -167,8 +169,10 @@ locals {
     }
 
     log_group = {
-      retention_in_days = coalesce(try(var.image_optimization_options.log_group.retention_in_days, null), 365)
-      kms_key_id        = try(var.image_optimization_options.log_group.kms_key_id, null)
+      retention_in_days      = coalesce(try(var.image_optimization_options.log_group.retention_in_days, null), 365)
+      kms_key_id             = try(var.image_optimization_options.log_group.kms_key_id, null)
+      filter_destination_arn = try(var.image_optimization_options.log_group.filter_destination_arn, null)
+      filter_pattern         = coalesce(try(var.image_optimization_options.log_group.filter_pattern, null), "")
     }
 
     networking = {
@@ -218,8 +222,10 @@ locals {
     }
 
     log_group = {
-      retention_in_days = coalesce(try(var.revalidation_options.log_group.retention_in_days, null), 365)
-      kms_key_id        = try(var.revalidation_options.log_group.kms_key_id, null)
+      retention_in_days      = coalesce(try(var.revalidation_options.log_group.retention_in_days, null), 365)
+      kms_key_id             = try(var.revalidation_options.log_group.kms_key_id, null)
+      filter_destination_arn = try(var.revalidation_options.log_group.filter_destination_arn, null)
+      filter_pattern         = coalesce(try(var.revalidation_options.log_group.filter_pattern, null), "")
     }
 
     networking = {
@@ -277,8 +283,10 @@ locals {
     }
 
     log_group = {
-      retention_in_days = coalesce(try(var.warmer_options.log_group.retention_in_days, null), 365)
-      kms_key_id        = try(var.warmer_options.log_group.kms_key_id, null)
+      retention_in_days      = coalesce(try(var.warmer_options.log_group.retention_in_days, null), 365)
+      kms_key_id             = try(var.warmer_options.log_group.kms_key_id, null)
+      filter_destination_arn = try(var.warmer_options.log_group.filter_destination_arn, null)
+      filter_pattern         = coalesce(try(var.warmer_options.log_group.filter_pattern, null), "")
     }
 
     networking = {
