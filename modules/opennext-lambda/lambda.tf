@@ -150,3 +150,11 @@ resource "aws_cloudwatch_log_group" "function_log_group" {
   retention_in_days = var.log_group.retention_in_days
   kms_key_id        = var.log_group.kms_key_id
 }
+
+resource "aws_cloudwatch_log_subscription_filter" "function_log_group_filter" {
+  count           = var.log_group.filter_destination_arn != null ? 1 : 0
+  name            = "${aws_lambda_function.function.function_name}-subscription-filter"
+  log_group_name  = aws_cloudwatch_log_group.function_log_group.name
+  filter_pattern  = var.log_group.filter_pattern
+  destination_arn = var.log_group.filter_destination_arn
+}
