@@ -127,8 +127,10 @@ variable "server_options" {
       })))
     }))
     log_group = optional(object({
-      retention_in_days = optional(number)
-      kms_key_id        = optional(string)
+      retention_in_days      = optional(number)
+      kms_key_id             = optional(string)
+      filter_destination_arn = optional(string)
+      filter_pattern         = optional(string)
     }))
   })
   default = {}
@@ -194,8 +196,10 @@ variable "image_optimization_options" {
       })))
     }))
     log_group = optional(object({
-      retention_in_days = optional(number)
-      kms_key_id        = optional(string)
+      retention_in_days      = optional(number)
+      kms_key_id             = optional(string)
+      filter_destination_arn = optional(string)
+      filter_pattern         = optional(string)
     }))
   })
   default = {}
@@ -261,8 +265,10 @@ variable "revalidation_options" {
       })))
     }))
     log_group = optional(object({
-      retention_in_days = optional(number)
-      kms_key_id        = optional(string)
+      retention_in_days      = optional(number)
+      kms_key_id             = optional(string)
+      filter_destination_arn = optional(string)
+      filter_pattern         = optional(string)
     }))
   })
   default = {}
@@ -336,8 +342,10 @@ variable "warmer_options" {
       })))
     }))
     log_group = optional(object({
-      retention_in_days = optional(number)
-      kms_key_id        = optional(string)
+      retention_in_days      = optional(number)
+      kms_key_id             = optional(string)
+      filter_destination_arn = optional(string)
+      filter_pattern         = optional(string)
     }))
   })
   default = {}
