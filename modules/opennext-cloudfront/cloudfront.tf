@@ -9,6 +9,14 @@ locals {
   cloudfront_s3_origin_request_policy_id = var.origin_request_policy == null ? data.aws_cloudfront_origin_request_policy.s3_origin_request_policy[0].id : aws_cloudfront_origin_request_policy.origin_request_policy[0].id
 }
 
+resource "aws_cloudfront_origin_access_control" "lambda_oac" {
+  name                              = "${var.prefix}-lambda-oac"
+  description                       = "OAC for Lambda Function URL origins"
+  origin_access_control_origin_type = "lambda"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
 resource "aws_cloudfront_function" "host_header_function" {
   name    = "${var.prefix}-preserve-host"
   runtime = "cloudfront-js-1.0"
@@ -269,6 +277,8 @@ resource "aws_cloudfront_distribution" "distribution" {
       origin_ssl_protocols   = ["TLSv1.2"]
       origin_read_timeout    = var.origin_read_timeout
     }
+
+    origin_access_control_id = aws_cloudfront_origin_access_control.lambda_oac.id
   }
 
   # Image Optimization Function Origin
@@ -284,6 +294,8 @@ resource "aws_cloudfront_distribution" "distribution" {
       origin_ssl_protocols   = ["TLSv1.2"]
       origin_read_timeout    = var.origin_read_timeout
     }
+
+    origin_access_control_id = aws_cloudfront_origin_access_control.lambda_oac.id
   }
 
   # Behaviour - Hashed Static Files (/_next/static/*)
