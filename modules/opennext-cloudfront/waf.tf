@@ -151,7 +151,7 @@ resource "aws_wafv2_web_acl_logging_configuration" "waf_logging" {
           }
 
           dynamic "condition" {
-            for_each = filter.value.label_name_condition != null ? toset(filter.label_name_condition) : []
+            for_each = filter.value.label_name_condition != null ? toset(filter.value.label_name_condition) : []
 
             content {
               label_name_condition {
@@ -165,7 +165,7 @@ resource "aws_wafv2_web_acl_logging_configuration" "waf_logging" {
   }
 
   dynamic "redacted_fields" {
-    for_each = var.waf_logging_configuration.redacted_fields == null ? toset(var.waf_logging_configuration.redacted_fields) : []
+    for_each = var.waf_logging_configuration.redacted_fields != null ? toset(var.waf_logging_configuration.redacted_fields) : []
 
     content {
       dynamic "method" {
