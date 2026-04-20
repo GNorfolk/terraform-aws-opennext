@@ -77,6 +77,7 @@ locals {
     custom_response_headers_policy = try(var.cloudfront.custom_response_headers_policy, null)
 
     custom_waf                = var.cloudfront.custom_waf
+    waf_common_rule_set_count_rule_overrides = coalesce(try(var.cloudfront.waf_common_rule_set_count_rule_overrides, null), ["NoUserAgent_HEADER", "SizeRestrictions_QUERYSTRING"])
     waf_logging_configuration = var.cloudfront.waf_logging_configuration
   }
 

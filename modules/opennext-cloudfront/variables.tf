@@ -195,6 +195,12 @@ variable "waf_logging_configuration" {
   default = null
 }
 
+variable "waf_common_rule_set_count_rule_overrides" {
+  description = "List of AWSManagedRulesCommonRuleSet rule names to override as count"
+  type        = list(string)
+  default     = ["NoUserAgent_HEADER"]
+}
+
 variable "origin_request_policy" {
   type = object({
     cookies_config = object({

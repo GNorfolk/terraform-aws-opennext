@@ -272,5 +272,6 @@ module "cloudfront" {
   custom_response_headers_policy = local.cloudfront.custom_response_headers_policy
 
   custom_waf                = local.cloudfront.custom_waf
+  waf_common_rule_set_count_rule_overrides = local.cloudfront.waf_common_rule_set_count_rule_overrides
   waf_logging_configuration = local.cloudfront.waf_logging_configuration
 }

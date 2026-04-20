@@ -24,12 +24,16 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
         name        = "AWSManagedRulesCommonRuleSet"
         vendor_name = "AWS"
 
-        rule_action_override {
-          action_to_use {
-            count {}
-          }
+        dynamic "rule_action_override" {
+          for_each = toset(var.waf_common_rule_set_count_rule_overrides)
 
-          name = "NoUserAgent_HEADER"
+          content {
+            action_to_use {
+              count {}
+            }
+
+            name = rule_action_override.value
+          }
         }
       }
     }
