@@ -196,9 +196,9 @@ variable "waf_logging_configuration" {
 }
 
 variable "waf_common_rule_set_count_rule_overrides" {
-  description = "List of AWSManagedRulesCommonRuleSet rule names to override as count"
+  description = "Additional AWSManagedRulesCommonRuleSet rule names to override as count. NoUserAgent_HEADER is always included."
   type        = list(string)
-  default     = ["NoUserAgent_HEADER"]
+  default     = []
 }
 
 variable "origin_request_policy" {

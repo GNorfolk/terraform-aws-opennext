@@ -25,7 +25,7 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
         vendor_name = "AWS"
 
         dynamic "rule_action_override" {
-          for_each = toset(var.waf_common_rule_set_count_rule_overrides)
+          for_each = toset(concat(["NoUserAgent_HEADER"], var.waf_common_rule_set_count_rule_overrides))
 
           content {
             action_to_use {
