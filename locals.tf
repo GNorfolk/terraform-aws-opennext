@@ -76,8 +76,9 @@ locals {
     custom_cache_policy            = try(var.cloudfront.custom_cache_policy, null)
     custom_response_headers_policy = try(var.cloudfront.custom_response_headers_policy, null)
 
-    custom_waf                = var.cloudfront.custom_waf
-    waf_logging_configuration = var.cloudfront.waf_logging_configuration
+    custom_waf                               = var.cloudfront.custom_waf
+    waf_common_rule_set_count_rule_overrides = coalesce(try(var.cloudfront.waf_common_rule_set_count_rule_overrides, null), [])
+    waf_logging_configuration                = var.cloudfront.waf_logging_configuration
   }
 
   /**

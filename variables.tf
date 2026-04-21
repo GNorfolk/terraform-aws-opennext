@@ -445,6 +445,7 @@ variable "cloudfront" {
     custom_waf = optional(object({
       arn = string
     }))
+    waf_common_rule_set_count_rule_overrides = optional(list(string))
     waf_logging_configuration = optional(object({
       log_destination_configs = list(string)
       logging_filter = optional(object({

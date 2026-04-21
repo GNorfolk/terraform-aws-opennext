@@ -42,7 +42,7 @@ module "artifacts" {
   region       = local.aws_region
   default_tags = var.default_tags
 
-  prefix       = "${var.prefix}-artifacts"
+  prefix = "${var.prefix}-artifacts"
 }
 
 /**
@@ -232,7 +232,7 @@ module "cloudfront_logs" {
  * Next.js CloudFront Distribution
  **/
 module "cloudfront" {
-  source       = "./modules/opennext-cloudfront"
+  source = "./modules/opennext-cloudfront"
   providers = {
     aws        = aws
     aws.global = aws.global
@@ -271,6 +271,7 @@ module "cloudfront" {
   custom_cache_policy            = local.cloudfront.custom_cache_policy
   custom_response_headers_policy = local.cloudfront.custom_response_headers_policy
 
-  custom_waf                = local.cloudfront.custom_waf
-  waf_logging_configuration = local.cloudfront.waf_logging_configuration
+  custom_waf                               = local.cloudfront.custom_waf
+  waf_common_rule_set_count_rule_overrides = local.cloudfront.waf_common_rule_set_count_rule_overrides
+  waf_logging_configuration                = local.cloudfront.waf_logging_configuration
 }
