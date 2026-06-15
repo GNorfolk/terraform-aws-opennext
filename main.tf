@@ -267,6 +267,7 @@ module "cloudfront" {
   referrer_policy         = local.cloudfront.referrer_policy
   cache_policy            = local.cloudfront.cache_policy
   remove_headers_config   = local.cloudfront.remove_headers_config
+  origin_read_timeout     = local.cloudfront.origin_read_timeout
 
   custom_cache_policy            = local.cloudfront.custom_cache_policy
   custom_response_headers_policy = local.cloudfront.custom_response_headers_policy
