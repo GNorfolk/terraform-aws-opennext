@@ -19,6 +19,11 @@ variable "comment" {
   description = "Comment to add to the CloudFront distribution"
 }
 
+variable "origin_read_timeout" {
+  type        = string
+  description = "The read timeout for the origin"
+}
+
 variable "acm_certificate_arn" {
   type = string
 }
