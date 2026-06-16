@@ -15,9 +15,9 @@ variable "default_tags" {
 }
 
 variable "default_runtime" {
-  type = string
+  type        = string
   description = "Default runtime for Lambda functions"
-  default = "nodejs18.x"
+  default     = "nodejs18.x"
 }
 
 /**
@@ -100,8 +100,8 @@ variable "server_options" {
       resources = list(string)
     })))
     networking = optional(object({
-      vpc_id     = optional(string)
-      subnet_ids = optional(list(string))
+      vpc_id               = optional(string)
+      subnet_ids           = optional(list(string))
       subnet_map_public_ip = optional(bool)
       sg_ingress_rules = optional(list(object({
         description      = string
@@ -169,8 +169,8 @@ variable "image_optimization_options" {
       resources = list(string)
     })))
     networking = optional(object({
-      vpc_id     = optional(string)
-      subnet_ids = optional(list(string))
+      vpc_id               = optional(string)
+      subnet_ids           = optional(list(string))
       subnet_map_public_ip = optional(bool)
       sg_ingress_rules = optional(list(object({
         description      = string
@@ -238,8 +238,8 @@ variable "revalidation_options" {
       resources = list(string)
     })))
     networking = optional(object({
-      vpc_id     = optional(string)
-      subnet_ids = optional(list(string))
+      vpc_id               = optional(string)
+      subnet_ids           = optional(list(string))
       subnet_map_public_ip = optional(bool)
       sg_ingress_rules = optional(list(object({
         description      = string
@@ -315,8 +315,8 @@ variable "warmer_options" {
       resources = list(string)
     })))
     networking = optional(object({
-      vpc_id     = optional(string)
-      subnet_ids = optional(list(string))
+      vpc_id               = optional(string)
+      subnet_ids           = optional(list(string))
       subnet_map_public_ip = optional(bool)
       sg_ingress_rules = optional(list(object({
         description      = string

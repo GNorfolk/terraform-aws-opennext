@@ -73,7 +73,7 @@ locals {
     }
     origin_request_policy = try(var.cloudfront.origin_request_policy, null)
     origin_read_timeout   = try(var.cloudfront.origin_read_timeout, null)
-    
+
     custom_cache_policy            = try(var.cloudfront.custom_cache_policy, null)
     custom_response_headers_policy = try(var.cloudfront.custom_response_headers_policy, null)
 
