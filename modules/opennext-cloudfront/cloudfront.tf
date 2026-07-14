@@ -3,8 +3,10 @@ locals {
   assets_origin_id             = "${var.prefix}-assets-origin"
   image_optimization_origin_id = "${var.prefix}-image-optimization-origin"
 
-  cloudfront_cache_policy_id            = var.custom_cache_policy == null ? aws_cloudfront_cache_policy.cache_policy[0].id : data.aws_cloudfront_cache_policy.cache_policy[0].id
-  cloudfront_response_headers_policy_id = var.custom_response_headers_policy == null ? aws_cloudfront_response_headers_policy.response_headers_policy[0].id : data.aws_cloudfront_response_headers_policy.response_headers_policy[0].id
+  cloudfront_cache_policy_id             = var.custom_cache_policy == null ? aws_cloudfront_cache_policy.cache_policy[0].id : data.aws_cloudfront_cache_policy.cache_policy[0].id
+  cloudfront_response_headers_policy_id  = var.custom_response_headers_policy == null ? aws_cloudfront_response_headers_policy.response_headers_policy[0].id : data.aws_cloudfront_response_headers_policy.response_headers_policy[0].id
+  cloudfront_origin_request_policy_id    = var.origin_request_policy == null ? aws_cloudfront_origin_request_policy.origin_request_policy[0].id : data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id
+  cloudfront_s3_origin_request_policy_id = var.origin_request_policy == null ? aws_cloudfront_origin_request_policy.origin_request_policy[0].id : data.aws_cloudfront_origin_request_policy.s3_origin_request_policy[0].id
 }
 
 resource "aws_cloudfront_function" "host_header_function" {
@@ -24,6 +26,11 @@ EOF
 data "aws_cloudfront_origin_request_policy" "origin_request_policy" {
   count = var.origin_request_policy == null ? 1 : 0
   name  = "Managed-AllViewerExceptHostHeader"
+}
+
+data "aws_cloudfront_origin_request_policy" "s3_origin_request_policy" {
+  count = var.origin_request_policy == null ? 1 : 0
+  name  = "CORS-S3Origin"
 }
 
 resource "aws_cloudfront_origin_request_policy" "origin_request_policy" {
@@ -288,10 +295,7 @@ resource "aws_cloudfront_distribution" "distribution" {
 
     response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
-    origin_request_policy_id = try(
-      data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
-      aws_cloudfront_origin_request_policy.origin_request_policy[0].id
-    )
+    origin_request_policy_id   = local.cloudfront_s3_origin_request_policy_id
 
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
@@ -305,10 +309,7 @@ resource "aws_cloudfront_distribution" "distribution" {
 
     response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
-    origin_request_policy_id = try(
-      data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
-      aws_cloudfront_origin_request_policy.origin_request_policy[0].id
-    )
+    origin_request_policy_id   = local.cloudfront_origin_request_policy_id
 
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
@@ -322,10 +323,7 @@ resource "aws_cloudfront_distribution" "distribution" {
 
     response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
-    origin_request_policy_id = try(
-      data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
-      aws_cloudfront_origin_request_policy.origin_request_policy[0].id
-    )
+    origin_request_policy_id   = local.cloudfront_origin_request_policy_id
 
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
@@ -344,10 +342,7 @@ resource "aws_cloudfront_distribution" "distribution" {
 
     response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
-    origin_request_policy_id = try(
-      data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
-      aws_cloudfront_origin_request_policy.origin_request_policy[0].id
-    )
+    origin_request_policy_id   = local.cloudfront_origin_request_policy_id
 
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
@@ -366,10 +361,7 @@ resource "aws_cloudfront_distribution" "distribution" {
 
     response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
-    origin_request_policy_id = try(
-      data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
-      aws_cloudfront_origin_request_policy.origin_request_policy[0].id
-    )
+    origin_request_policy_id   = local.cloudfront_s3_origin_request_policy_id
 
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
@@ -386,10 +378,7 @@ resource "aws_cloudfront_distribution" "distribution" {
 
       response_headers_policy_id = local.cloudfront_response_headers_policy_id
       cache_policy_id            = local.cloudfront_cache_policy_id
-      origin_request_policy_id = try(
-        data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
-        aws_cloudfront_origin_request_policy.origin_request_policy[0].id
-      )
+      origin_request_policy_id   = local.cloudfront_s3_origin_request_policy_id
 
       compress               = true
       viewer_protocol_policy = "redirect-to-https"
@@ -403,10 +392,7 @@ resource "aws_cloudfront_distribution" "distribution" {
 
     response_headers_policy_id = local.cloudfront_response_headers_policy_id
     cache_policy_id            = local.cloudfront_cache_policy_id
-    origin_request_policy_id = try(
-      data.aws_cloudfront_origin_request_policy.origin_request_policy[0].id,
-      aws_cloudfront_origin_request_policy.origin_request_policy[0].id
-    )
+    origin_request_policy_id   = local.cloudfront_origin_request_policy_id
 
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
