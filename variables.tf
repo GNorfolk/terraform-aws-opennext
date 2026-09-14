@@ -101,6 +101,7 @@ variable "server_options" {
     })))
     networking = optional(object({
       vpc_id               = optional(string)
+      security_group_id    = optional(string)
       subnet_ids           = optional(list(string))
       subnet_map_public_ip = optional(bool)
       sg_ingress_rules = optional(list(object({
@@ -170,6 +171,7 @@ variable "image_optimization_options" {
     })))
     networking = optional(object({
       vpc_id               = optional(string)
+      security_group_id    = optional(string)
       subnet_ids           = optional(list(string))
       subnet_map_public_ip = optional(bool)
       sg_ingress_rules = optional(list(object({
@@ -239,6 +241,7 @@ variable "revalidation_options" {
     })))
     networking = optional(object({
       vpc_id               = optional(string)
+      security_group_id    = optional(string)
       subnet_ids           = optional(list(string))
       subnet_map_public_ip = optional(bool)
       sg_ingress_rules = optional(list(object({
@@ -316,6 +319,7 @@ variable "warmer_options" {
     })))
     networking = optional(object({
       vpc_id               = optional(string)
+      security_group_id    = optional(string)
       subnet_ids           = optional(list(string))
       subnet_map_public_ip = optional(bool)
       sg_ingress_rules = optional(list(object({

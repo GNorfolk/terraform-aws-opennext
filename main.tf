@@ -74,6 +74,7 @@ module "server_function" {
   artifacts_bucket = module.artifacts.artifacts_bucket.id
 
   vpc_id                       = local.server_options.networking.vpc_id
+  security_group_id            = local.server_options.networking.security_group_id
   subnet_ids                   = local.server_options.networking.subnet_ids
   subnet_map_public_ip         = local.server_options.networking.subnet_map_public_ip
   security_group_ingress_rules = local.server_options.networking.security_group_ingress_rules
@@ -112,6 +113,7 @@ module "image_optimization_function" {
   artifacts_bucket = module.artifacts.artifacts_bucket.id
 
   vpc_id                       = local.image_optimization_options.networking.vpc_id
+  security_group_id            = local.image_optimization_options.networking.security_group_id
   subnet_ids                   = local.image_optimization_options.networking.subnet_ids
   subnet_map_public_ip         = local.image_optimization_options.networking.subnet_map_public_ip
   security_group_ingress_rules = local.image_optimization_options.networking.security_group_ingress_rules
@@ -149,6 +151,7 @@ module "revalidation_function" {
   artifacts_bucket = module.artifacts.artifacts_bucket.id
 
   vpc_id                       = local.revalidation_options.networking.vpc_id
+  security_group_id            = local.revalidation_options.networking.security_group_id
   subnet_ids                   = local.revalidation_options.networking.subnet_ids
   subnet_map_public_ip         = local.revalidation_options.networking.subnet_map_public_ip
   security_group_ingress_rules = local.revalidation_options.networking.security_group_ingress_rules
@@ -204,6 +207,7 @@ module "warmer_function" {
   artifacts_bucket = module.artifacts.artifacts_bucket.id
 
   vpc_id                       = local.warmer_options.networking.vpc_id
+  security_group_id            = local.warmer_options.networking.security_group_id
   subnet_ids                   = local.warmer_options.networking.subnet_ids
   subnet_map_public_ip         = local.warmer_options.networking.subnet_map_public_ip
   security_group_ingress_rules = local.warmer_options.networking.security_group_ingress_rules

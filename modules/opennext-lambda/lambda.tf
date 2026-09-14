@@ -56,7 +56,7 @@ resource "aws_lambda_function" "function" {
     for_each = var.vpc_id == null ? [] : [1]
 
     content {
-      security_group_ids = [aws_security_group.function_sg[0].id]
+      security_group_ids = [coalesce(var.security_group_id, aws_security_group.function_sg[0].id)]
       subnet_ids         = data.aws_subnets.this[0].ids
     }
   }
@@ -90,7 +90,7 @@ resource "aws_security_group" "function_sg" {
   # checkov:skip=CKV2_AWS_5:Security Group is attached in dynamic vpc_config block
   # checkov:skip=CKV_AWS_23:Rule descriptions are dynamic and not picked up by Checkov
 
-  count = var.vpc_id == null ? 0 : 1
+  count = var.vpc_id == null || var.security_group_id != null ? 0 : 1
 
   name   = "${var.prefix}-sg"
   vpc_id = data.aws_vpc.this[0].id
