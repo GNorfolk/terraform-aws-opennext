@@ -2,8 +2,16 @@ output "lambda_function" {
   value = aws_lambda_function.function
 }
 
-output "lambda_function_url" {
-  value = aws_lambda_function_url.function_url
+output "api_gateway_rest_api" {
+  value = aws_api_gateway_rest_api.this
+}
+
+output "api_gateway_stage" {
+  value = aws_api_gateway_stage.this
+}
+
+output "api_gateway_domain_name" {
+  value = "${aws_api_gateway_rest_api.this.id}.execute-api.${var.region}.amazonaws.com"
 }
 
 output "cloudwatch_event_rule" {

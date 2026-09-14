@@ -25,3 +25,8 @@ output "revalidation_queue" {
 output "cloudfront" {
   value = module.cloudfront
 }
+
+output "api_key" {
+  value     = module.api_key
+  sensitive = true
+}

@@ -485,3 +485,12 @@ variable "cloudfront_log_options" {
   })
   default = {}
 }
+
+variable "api_gateway_options" {
+  description = "Variables passed to the opennext-api-key module and the API Gateways placed in front of the Lambda functions"
+  type = object({
+    stage_name          = optional(string)
+    existing_api_key_id = optional(string)
+  })
+  default = {}
+}
