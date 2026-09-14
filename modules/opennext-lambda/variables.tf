@@ -147,6 +147,12 @@ variable "vpc_id" {
   default     = null
 }
 
+variable "security_group_id" {
+  type        = string
+  description = "Existing security group ID to attach to the lambda function instead of creating one"
+  default     = null
+}
+
 variable "subnet_ids" {
   type        = list(string)
   description = "The subnets to attach the lambda function to (if vpc_id is provided)"
