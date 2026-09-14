@@ -46,6 +46,18 @@ module "artifacts" {
 }
 
 /**
+ * API Gateway API Key
+ **/
+module "api_key" {
+  source       = "./modules/opennext-api-key"
+  region       = local.aws_region
+  default_tags = var.default_tags
+
+  prefix              = "${var.prefix}-api-key"
+  existing_api_key_id = local.api_gateway.existing_api_key_id
+}
+
+/**
  * Next.js Server Function
  **/
 module "server_function" {
@@ -72,6 +84,9 @@ module "server_function" {
   source_dir       = local.server_options.package.source_dir
   output_dir       = local.server_options.package.output_dir
   artifacts_bucket = module.artifacts.artifacts_bucket.id
+
+  api_gateway_key_id     = module.api_key.api_key_id
+  api_gateway_stage_name = local.api_gateway.stage_name
 
   vpc_id                       = local.server_options.networking.vpc_id
   security_group_id            = local.server_options.networking.security_group_id
@@ -112,6 +127,9 @@ module "image_optimization_function" {
   output_dir       = local.image_optimization_options.package.output_dir
   artifacts_bucket = module.artifacts.artifacts_bucket.id
 
+  api_gateway_key_id     = module.api_key.api_key_id
+  api_gateway_stage_name = local.api_gateway.stage_name
+
   vpc_id                       = local.image_optimization_options.networking.vpc_id
   security_group_id            = local.image_optimization_options.networking.security_group_id
   subnet_ids                   = local.image_optimization_options.networking.subnet_ids
@@ -149,6 +167,9 @@ module "revalidation_function" {
   source_dir       = local.revalidation_options.package.source_dir
   output_dir       = local.revalidation_options.package.output_dir
   artifacts_bucket = module.artifacts.artifacts_bucket.id
+
+  api_gateway_key_id     = module.api_key.api_key_id
+  api_gateway_stage_name = local.api_gateway.stage_name
 
   vpc_id                       = local.revalidation_options.networking.vpc_id
   security_group_id            = local.revalidation_options.networking.security_group_id
@@ -206,6 +227,9 @@ module "warmer_function" {
   output_dir       = local.warmer_options.package.output_dir
   artifacts_bucket = module.artifacts.artifacts_bucket.id
 
+  api_gateway_key_id     = module.api_key.api_key_id
+  api_gateway_stage_name = local.api_gateway.stage_name
+
   vpc_id                       = local.warmer_options.networking.vpc_id
   security_group_id            = local.warmer_options.networking.security_group_id
   subnet_ids                   = local.warmer_options.networking.subnet_ids
@@ -254,9 +278,12 @@ module "cloudfront" {
 
   origins = {
     assets_bucket               = module.assets.assets_bucket.bucket_regional_domain_name
-    server_function             = "${module.server_function.lambda_function_url.url_id}.lambda-url.${local.aws_region}.on.aws"
-    image_optimization_function = "${module.image_optimization_function.lambda_function_url.url_id}.lambda-url.${local.aws_region}.on.aws"
+    server_function             = module.server_function.api_gateway_domain_name
+    image_optimization_function = module.image_optimization_function.api_gateway_domain_name
   }
+
+  api_gateway_origin_path = "/${local.api_gateway.stage_name}"
+  api_gateway_api_key     = module.api_key.api_key_value
 
   aliases                 = local.cloudfront.aliases
   acm_certificate_arn     = local.cloudfront.acm_certificate_arn

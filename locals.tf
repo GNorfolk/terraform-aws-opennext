@@ -323,4 +323,12 @@ locals {
   cloudfront_log_options = {
     cloudwatch_log_group_kms_key_arn = try(var.cloudfront_log_options.cloudwatch_log_group_kms_key_arn, null)
   }
+
+  /**
+   * API Gateway Options
+   **/
+  api_gateway = {
+    stage_name          = coalesce(try(var.api_gateway_options.stage_name, null), "opennext")
+    existing_api_key_id = try(var.api_gateway_options.existing_api_key_id, null)
+  }
 }

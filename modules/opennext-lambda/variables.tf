@@ -211,6 +211,20 @@ variable "iam_policy_statements" {
 }
 
 /**
+ * API Gateway
+ **/
+variable "api_gateway_key_id" {
+  type        = string
+  description = "The ID of the API Gateway API key required to invoke the stage"
+}
+
+variable "api_gateway_stage_name" {
+  type        = string
+  description = "The name of the API Gateway stage placed in front of the Lambda function"
+  default     = "opennext"
+}
+
+/**
  * EventBridge Scheduled Rule
  **/
 variable "schedule_expression" {

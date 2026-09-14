@@ -260,7 +260,13 @@ resource "aws_cloudfront_distribution" "distribution" {
   origin {
     domain_name = var.origins.server_function
     # domain_name = "${module.server_function.lambda_function_url_id}.lambda-url.eu-west-2.on.aws"
-    origin_id = local.server_origin_id
+    origin_id   = local.server_origin_id
+    origin_path = var.api_gateway_origin_path
+
+    custom_header {
+      name  = "x-api-key"
+      value = var.api_gateway_api_key
+    }
 
     custom_origin_config {
       http_port              = 80
@@ -276,6 +282,12 @@ resource "aws_cloudfront_distribution" "distribution" {
     # domain_name = "${module.image_optimization_function.lambda_function_url_id}.lambda-url.eu-west-2.on.aws"
     domain_name = var.origins.image_optimization_function
     origin_id   = local.image_optimization_origin_id
+    origin_path = var.api_gateway_origin_path
+
+    custom_header {
+      name  = "x-api-key"
+      value = var.api_gateway_api_key
+    }
 
     custom_origin_config {
       http_port              = 80

@@ -70,22 +70,6 @@ resource "aws_lambda_function" "function" {
   }
 }
 
-resource "aws_lambda_function_url" "function_url" {
-  # TODO: Find a way to authenticate lambda function with CloudFront
-  # checkov:skip=CKV_AWS_258:Lambda Function URL is public for CloudFront origin
-
-  function_name      = aws_lambda_function.function.function_name
-  authorization_type = "NONE"
-  invoke_mode        = "BUFFERED"
-}
-
-resource "aws_lambda_permission" "function_url_permission" {
-  action                 = "lambda:InvokeFunctionUrl"
-  function_name          = aws_lambda_function.function.function_name
-  principal              = "cloudfront.amazonaws.com"
-  function_url_auth_type = "NONE"
-}
-
 resource "aws_security_group" "function_sg" {
   # checkov:skip=CKV2_AWS_5:Security Group is attached in dynamic vpc_config block
   # checkov:skip=CKV_AWS_23:Rule descriptions are dynamic and not picked up by Checkov

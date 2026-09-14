@@ -50,6 +50,17 @@ variable "assets_origin_access_identity" {
   type = string
 }
 
+variable "api_gateway_origin_path" {
+  type        = string
+  description = "The origin path (API Gateway stage) appended to requests sent to the Lambda-backed origins"
+}
+
+variable "api_gateway_api_key" {
+  type        = string
+  description = "The API key value CloudFront sends to the API Gateway origins via the x-api-key header"
+  sensitive   = true
+}
+
 variable "logging_bucket_domain_name" {
   type = string
 }
