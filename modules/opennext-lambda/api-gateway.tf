@@ -23,7 +23,8 @@ resource "aws_api_gateway_method" "proxy" {
   api_key_required = true
 
   request_parameters = {
-    "method.request.path.proxy" = true
+    "method.request.path.proxy"           = true
+    "method.request.header.Authorization" = false
   }
 }
 
@@ -34,6 +35,12 @@ resource "aws_api_gateway_integration" "proxy" {
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.function.invoke_arn
+
+  # Ensure the viewer's Authorization header reaches the Lambda verbatim.
+  # REST APIs otherwise drop/remap it between the method and the integration.
+  request_parameters = {
+    "integration.request.header.Authorization" = "method.request.header.Authorization"
+  }
 }
 
 resource "aws_api_gateway_method" "proxy_root" {
@@ -42,6 +49,10 @@ resource "aws_api_gateway_method" "proxy_root" {
   http_method      = "ANY"
   authorization    = "NONE"
   api_key_required = true
+
+  request_parameters = {
+    "method.request.header.Authorization" = false
+  }
 }
 
 resource "aws_api_gateway_integration" "proxy_root" {
@@ -51,6 +62,12 @@ resource "aws_api_gateway_integration" "proxy_root" {
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.function.invoke_arn
+
+  # Ensure the viewer's Authorization header reaches the Lambda verbatim.
+  # REST APIs otherwise drop/remap it between the method and the integration.
+  request_parameters = {
+    "integration.request.header.Authorization" = "method.request.header.Authorization"
+  }
 }
 
 resource "aws_lambda_permission" "api_gateway" {
@@ -80,9 +97,9 @@ resource "aws_api_gateway_deployment" "this" {
 }
 
 resource "aws_api_gateway_stage" "this" {
-  rest_api_id          = aws_api_gateway_rest_api.this.id
-  deployment_id        = aws_api_gateway_deployment.this.id
-  stage_name           = var.api_gateway_stage_name
+  rest_api_id   = aws_api_gateway_rest_api.this.id
+  deployment_id = aws_api_gateway_deployment.this.id
+  stage_name    = var.api_gateway_stage_name
 }
 
 resource "aws_api_gateway_usage_plan" "this" {
