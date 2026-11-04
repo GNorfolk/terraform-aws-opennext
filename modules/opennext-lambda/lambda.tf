@@ -56,7 +56,7 @@ resource "aws_lambda_function" "function" {
     for_each = var.vpc_id == null ? [] : [1]
 
     content {
-      security_group_ids = [coalesce(var.security_group_id, aws_security_group.function_sg[0].id)]
+      security_group_ids = [var.security_group_id != null ? var.security_group_id : aws_security_group.function_sg[0].id]
       subnet_ids         = data.aws_subnets.this[0].ids
     }
   }
